@@ -24,22 +24,41 @@
 
       var email = document.getElementById('email').value;
       var username = document.getElementById('username').value;
+      var name = document.getElementById('name').value;
+      var message = document.getElementById('message').value;
 
-      // Check if the email and username are not empty
-      if (email && username) {
-        // Store the authorization request in Firestore
-        var db = firebase.firestore();
-        var authorizationRequestsCollection = db.collection("authorization_requests");
+      // Check if the email, username, name, and message are not empty
+      if (email && username && name && message) {
+        // Send the request to your backend for processing
+        // Modify the URL below to point to your backend API or server endpoint
+        var backendEndpoint = 'https://your-backend-url.com/process-signup';
 
-        authorizationRequestsCollection.add({
+        // Create an object with the form data
+        var requestData = {
           email: email,
-          username: username
+          username: username,
+          name: name,
+          message: message
+        };
+
+        // Make a POST request to the backend endpoint
+        fetch(backendEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(requestData)
         })
-        .then(function(docRef) {
-          console.log("Authorization request submitted with ID: ", docRef.id);
-          // Optionally, display a success message to the user or redirect them to a thank you page
-          // For example:
-          // window.location.href = 'thankyou.html';
+        .then(function(response) {
+          if (response.ok) {
+            console.log("Authorization request submitted successfully");
+            // Optionally, display a success message to the user or redirect them to a thank you page
+            // For example:
+            // window.location.href = 'thankyou.html';
+          } else {
+            console.error("Error submitting authorization request");
+            // Display an error message to the user indicating the request couldn't be submitted
+          }
         })
         .catch(function(error) {
           console.error("Error submitting authorization request: ", error);
@@ -60,6 +79,12 @@
 
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="message">Message:</label>
+    <textarea id="message" name="message" required></textarea>
 
     <input type="submit" value="Request Authorization">
   </form>
