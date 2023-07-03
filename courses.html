@@ -27,6 +27,38 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <!-- Include Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
+  
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+  apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
+  authDomain: "users-1e449.firebaseapp.com",
+  projectId: "users-1e449",
+  storageBucket: "users-1e449.appspot.com",
+  messagingSenderId: "763748549016",
+  appId: "1:763748549016:web:b1b27fe5cc2c24a5bfabed",
+  measurementId: "G-KW39Y6NBVB"
+    };
+  
+    firebase.initializeApp(firebaseConfig);
+  
+    // Add an event listener that executes when the page finishes loading
+    window.addEventListener('DOMContentLoaded', function() {
+      // Check if the user is logged in
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          // User is logged in, allow access to the page
+          // You can add your page-specific code or logic here
+        } else {
+          // User is not logged in, redirect to the login page
+          window.location.href = 'logiin.html';
+        }
+      });
+    });
+  </script>
 
   <!-- =======================================================
   * Template Name: Mentor
