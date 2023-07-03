@@ -3,6 +3,7 @@
 <head>
   <title>Signup</title>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
 
   <script>
@@ -29,41 +30,48 @@
 
       // Check if the email, username, name, and message are not empty
       if (email && username && name && message) {
-        // Send the request to your backend for processing
-        // Modify the URL below to point to your backend API or server endpoint
-        var backendEndpoint = 'https://your-backend-url.com/process-signup';
+        // Authenticate the request
+        firebase.auth().signInAnonymously()
+          .then(function(userCredential) {
+            var user = userCredential.user;
+            
+            // Send the request to your backend for processing
+            var backendEndpoint = 'https://your-backend-url.com/process-signup';
 
-        // Create an object with the form data
-        var requestData = {
-          email: email,
-          username: username,
-          name: name,
-          message: message
-        };
+            var requestData = {
+              email: email,
+              username: username,
+              name: name,
+              message: message
+            };
 
-        // Make a POST request to the backend endpoint
-        fetch(backendEndpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(requestData)
-        })
-        .then(function(response) {
-          if (response.ok) {
-            console.log("Authorization request submitted successfully");
-            // Optionally, display a success message to the user or redirect them to a thank you page
-            // For example:
-            // window.location.href = 'thankyou.html';
-          } else {
-            console.error("Error submitting authorization request");
-            // Display an error message to the user indicating the request couldn't be submitted
-          }
-        })
-        .catch(function(error) {
-          console.error("Error submitting authorization request: ", error);
-          // Display an error message to the user indicating the request couldn't be submitted
-        });
+            fetch(backendEndpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(requestData)
+            })
+            .then(function(response) {
+              if (response.ok) {
+                console.log("Authorization request submitted successfully");
+                // Optionally, display a success message to the user or redirect them to a thank you page
+                // For example:
+                // window.location.href = 'thankyou.html';
+              } else {
+                console.error("Error submitting authorization request");
+                // Display an error message to the user indicating the request couldn't be submitted
+              }
+            })
+            .catch(function(error) {
+              console.error("Error submitting authorization request: ", error);
+              // Display an error message to the user indicating the request couldn't be submitted
+            });
+          })
+          .catch(function(error) {
+            console.error("Error authenticating the request: ", error);
+            // Display an error message to the user indicating the authentication error
+          });
       } else {
         // Display an error message to the user indicating required fields are missing
       }
