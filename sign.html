@@ -3,13 +3,12 @@
 <head>
   <title>Signup</title>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
 
   <script>
     // Initialize Firebase
     var firebaseConfig = {
-   apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
+  apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
   authDomain: "users-1e449.firebaseapp.com",
   projectId: "users-1e449",
   storageBucket: "users-1e449.appspot.com",
@@ -28,13 +27,11 @@
 
       // Check if the email and username are not empty
       if (email && username) {
-        // Perform further actions with the form data
-        // For example, you can send the authorization request to an administrator
-        // or store the form data in a database for review
-
-        // Here, we'll assume the request is stored in an "authorization_requests" collection in Firestore
+        // Store the authorization request in Firestore
         var db = firebase.firestore();
-        db.collection("authorization_requests").add({
+        var authorizationRequestsCollection = db.collection("authorization_requests");
+
+        authorizationRequestsCollection.add({
           email: email,
           username: username
         })
