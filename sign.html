@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Sign Up</title>
-  <!-- Include Firebase SDK -->
+  <title>Signup</title>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
-</head>
-<body>
-  <h1>Sign Up</h1>
-
-  <form id="signupForm">
-    <label for="email">Emails:</label>
-    <input type="email" id="email" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" required>
-
-    <button type="submit">Sign Up</button>
-  </form>
-
-  <!-- Script to handle the signup process -->
+  <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
+  
   <script>
     // Initialize Firebase
     var firebaseConfig = {
@@ -34,27 +20,52 @@
   
     firebase.initializeApp(firebaseConfig);
   
-    // Add an event listener to the submit button
     document.getElementById('signupForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent the form from submitting by default
-      
+      event.preventDefault();
+
       var email = document.getElementById('email').value;
-      var password = document.getElementById('password').value;
-  
-      firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(function(user) {
-          // Handle successful signup
-          console.log('User created successfully!');
-          // Optionally, you can redirect the user to another page after successful signup
-          window.location.href = 'logiin.html';
+      var username = document.getElementById('username').value;
+
+      // Check if the email and username are not empty
+      if (email && username) {
+        // Perform further actions with the form data
+        // For example, you can send the authorization request to an administrator
+        // or store the form data in a database for review
+        
+        // Here, we'll assume the request is stored in a "authorization_requests" collection in Firestore
+        var db = firebase.firestore();
+        db.collection("authorization_requests").add({
+          email: email,
+          username: username
+        })
+        .then(function(docRef) {
+          console.log("Authorization request submitted with ID: ", docRef.id);
+          // Optionally, display a success message to the user or redirect them to a thank you page
+          // For example:
+          // window.location.href = 'thankyou.html';
         })
         .catch(function(error) {
-          // Handle errors
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.error(errorCode, errorMessage);
+          console.error("Error submitting authorization request: ", error);
+          // Display an error message to the user indicating the request couldn't be submitted
         });
+      } else {
+        // Display an error message to the user indicating required fields are missing
+      }
     });
   </script>
+</head>
+<body>
+  <h1>Signup</h1>
+  
+  <form id="signupForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+  
+    <input type="submit" value="Request Authorization">
+  </form>
+  
 </body>
 </html>
