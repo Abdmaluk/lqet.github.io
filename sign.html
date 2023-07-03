@@ -5,29 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>signup</title>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
-    authDomain: "users-1e449.firebaseapp.com",
-    projectId: "users-1e449",
-    storageBucket: "users-1e449.appspot.com",
-    messagingSenderId: "763748549016",
-    appId: "1:763748549016:web:b1b27fe5cc2c24a5bfabed",
-    measurementId: "G-KW39Y6NBVB"
+<script>
+  // Initialize Firebase
+  var firebaseConfig = {
+  apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
+  authDomain: "users-1e449.firebaseapp.com",
+  projectId: "users-1e449",
+  storageBucket: "users-1e449.appspot.com",
+  messagingSenderId: "763748549016",
+  appId: "1:763748549016:web:b1b27fe5cc2c24a5bfabed",
+  measurementId: "G-KW39Y6NBVB"
   };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+  firebase.initializeApp(firebaseConfig);
+
+  // Add an event listener to the submit button
+  document.getElementById('signupForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting by default
+    
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(function(user) {
+        // Handle successful signup
+        console.log('User created successfully!');
+        // Optionally, you can redirect the user to another page after successful signup
+        window.location.href = 'login.html';
+      })
+      .catch(function(error) {
+        // Handle errors
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+      });
+  });
 </script>
+
 </head>
 <body>
    <form id="signupForm">
