@@ -5,11 +5,11 @@
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
-  
+
   <script>
     // Initialize Firebase
     var firebaseConfig = {
-  apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
+      apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
   authDomain: "users-1e449.firebaseapp.com",
   projectId: "users-1e449",
   storageBucket: "users-1e449.appspot.com",
@@ -17,9 +17,9 @@
   appId: "1:763748549016:web:b1b27fe5cc2c24a5bfabed",
   measurementId: "G-KW39Y6NBVB"
     };
-  
+
     firebase.initializeApp(firebaseConfig);
-  
+
     document.getElementById('signupForm').addEventListener('submit', function(event) {
       event.preventDefault();
 
@@ -31,8 +31,8 @@
         // Perform further actions with the form data
         // For example, you can send the authorization request to an administrator
         // or store the form data in a database for review
-        
-        // Here, we'll assume the request is stored in a "authorization_requests" collection in Firestore
+
+        // Here, we'll assume the request is stored in an "authorization_requests" collection in Firestore
         var db = firebase.firestore();
         db.collection("authorization_requests").add({
           email: email,
@@ -56,16 +56,16 @@
 </head>
 <body>
   <h1>Signup</h1>
-  
+
   <form id="signupForm">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
-  
+
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" required>
-  
+
     <input type="submit" value="Request Authorization">
   </form>
-  
+
 </body>
 </html>
