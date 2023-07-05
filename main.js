@@ -1,10 +1,3 @@
-require.config({
-  paths: {
-    firebase: 'https://www.gstatic.com/firebasejs/9.23.0/firebase-app',
-    firebaseAuth: 'https://www.gstatic.com/firebasejs/9.23.0/firebase-auth'
-  }
-});
-
 require(['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
   // Your Firebase SDK code goes here
   const firebaseConfig = {
@@ -19,7 +12,7 @@ require(['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
 };
 
 // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
   const auth = firebaseAuth.getAuth();
 
   // Add an event listener to the signup form
