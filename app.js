@@ -18,7 +18,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
-const database = getDatabase();
+const database = getDatabase(app);
 
 const signupForm = document.getElementById('signup-form');
 const errorMessage = document.getElementById('error-message');
