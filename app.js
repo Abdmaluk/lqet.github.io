@@ -1,31 +1,28 @@
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+define(['firebase', 'firebase-auth'], function(firebase, firebaseAuth) {
+  // Your Firebase SDK code goes here
+  const auth = firebaseAuth.getAuth();
 
-// Get a reference to the sign-up form and the message div
-const form = document.querySelector('#signup-form');
-const message = document.querySelector('#message');
+  // Add an event listener to the signup form
+  const signupForm = document.getElementById('signup-form');
+  signupForm.addEventListener('submit', (event) => {
+    event.preventDefault();
 
-// Handle form submission
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const email = form.email.value;
-  const password = form.password.value;
+    // Get the user's email and password from the form
+    const email = signupForm.email.value;
+    const password = signupForm.password.value;
 
-  // Create a new user with Firebase Authentication
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Display success message to the user
-      message.innerHTML = 'Sign-up request submitted. Please wait for approval.';
-
-      // Create a new document in Firestore for the new user
-      const db = firebase.firestore();
-      db.collection('users').doc(userCredential.user.uid).set({
-        email: userCredential.user.email,
-        status: 'pending'
+    // Create a new user with the email and password
+    firebaseAuth.createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // User created successfully
+        const user = userCredential.user;
+        console.log(`User created: ${user.email}`);
+      })
+      .catch((error) => {
+        // Error occurred
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error(`Error creating user: ${errorCode} - ${errorMessage}`);
       });
-    })
-    .catch((error) => {
-      // Display error message to the user
-      message.innerHTML = error.message;
-    });
+  });
 });
