@@ -6,6 +6,18 @@
 //problems with requirejs.exec()/transpiler plugins that may not be strict.
 /*jslint regexp: true, nomen: true, sloppy: true */
 /*global window, navigator, document, importScripts, setTimeout, opera */
+// configure RequireJS
+require.config({
+  baseUrl: 'js',
+  paths: {
+    'jquery': 'https://code.jquery.com/jquery-3.6.0.min'
+  },
+  shim: {
+    'main': {
+      exports: 'myModule'
+    }
+  }
+});
 
 var requirejs, require, define;
 (function (global, setTimeout) {
