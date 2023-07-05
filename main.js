@@ -1,4 +1,4 @@
-require(['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
+define('myModule', ['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
   // Your Firebase SDK code goes here
   const firebaseConfig = {
   apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
@@ -12,7 +12,7 @@ require(['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
 };
 
 // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
   const auth = firebaseAuth.getAuth();
 
   // Add an event listener to the signup form
