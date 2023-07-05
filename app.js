@@ -1,6 +1,7 @@
 var registrationForm = document.getElementById('registration-form');
 var errorMessage = document.getElementById('error-message');
 
+// Existing code for registration form submission handler
 registrationForm.addEventListener('submit', function(event) {
   event.preventDefault();
 
@@ -15,7 +16,22 @@ registrationForm.addEventListener('submit', function(event) {
       // Registration successful
       var user = userCredential.user;
       console.log('User registered:', user);
-      // You can redirect the user to a different page or perform additional actions here
+
+      // Store user details in the database
+      var userDetails = {
+        email: user.email,
+        // Add additional user details as needed
+      };
+
+      database.ref('users/' + user.uid).set(userDetails)
+        .then(function() {
+          console.log('User details stored in the database');
+          // You can redirect the user to a different page or perform additional actions here
+        })
+        .catch(function(error) {
+          console.error('Error storing user details:', error);
+          // Handle the error and display an appropriate message to the user
+        });
     })
     .catch(function(error) {
       // Registration failed
@@ -26,6 +42,7 @@ registrationForm.addEventListener('submit', function(event) {
       errorMessage.textContent = errorMessage;
     });
 });
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyDV3F9KWocJgi1R5t90vb002Gg_bKLQIxU",
