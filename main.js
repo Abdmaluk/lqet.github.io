@@ -17,6 +17,9 @@ require(['firebase', 'firebaseAuth'], function(firebase, firebaseAuth) {
   appId: "1:763748549016:web:b1b27fe5cc2c24a5bfabed",
   measurementId: "G-KW39Y6NBVB"
 };
+
+// Initialize Firebase
+  const app = initializeApp(firebaseConfig);
   const auth = firebaseAuth.getAuth();
 
   // Add an event listener to the signup form
