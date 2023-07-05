@@ -1,5 +1,7 @@
 var registrationForm = document.getElementById('registration-form');
 var errorMessage = document.getElementById('error-message');
+var database = firebase.database();
+
 
 // Existing code for registration form submission handler
 registrationForm.addEventListener('submit', function(event) {
