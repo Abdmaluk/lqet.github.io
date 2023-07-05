@@ -16,10 +16,15 @@
     <br>
     <button type="submit">Sign Up</button>
   </form>
+  
   <script src="require.js"></script>
-  <script src="require.js"></script>
+  <script src="main.js"></script>
   <script src="app.js" data-main="main"></script>
   
-  <script src="main.js"></script>
+  <script>
+  require(['myModule'], function(myModule) {
+    // use the exported value of myModule.auth here
+  });
+</script>
 </body>
 </html>
