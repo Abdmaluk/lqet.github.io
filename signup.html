@@ -1,20 +1,40 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Signup</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-	<div class="container">
-		<h1>Signup</h1>
-		<form id="signup-form">
-			<label for="email">Email</label>
-			<input type="email" id="email" name="email" required>
-			<label for="password">Password</label>
-			<input type="password" id="password" name="password" required>
-			<button type="submit">Signup</button>
-		</form>
-	</div>
-	<script src="signup.js"></script>
-</body>
-</html>
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+// Get a reference to the authentication service
+var auth = firebase.auth();
+
+// Handle the form submission
+document.getElementById('signup-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+
+    // Create a new user with email and password
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(function (userCredential) {
+            // User signed up successfully
+            var user = userCredential.user;
+            console.log('User signed up:', user);
+            // You can redirect the user to another page here
+        })
+        .catch(function (error) {
+            // Handle errors here
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.error('Signup error:', errorCode, errorMessage);
+        });
+});
+
+// Add an authentication state change listener
+auth.onAuthStateChanged(function (user) {
+    if (user) {
+        // User is signed in
+        console.log('User is signed in:', user);
+        // You can perform actions based on the user's authentication state here
+    } else {
+        // User is signed out
+        console.log('User is signed out');
+        // You can perform actions based on the user's authentication state here
+    }
+});
